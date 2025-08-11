@@ -14,8 +14,11 @@
 #define _POSIX_C_SOURCE 1 /* for fdopen() */
 #define _BSD_SOURCE       /* for vsnprintf */
 
-#include <stdio.h>
+#ifdef __APPLE__
+    #define _DARWIN_C_SOURCE 1
+#endif
 
+#include <stdio.h>
 #include "zutil.h"
 
 #ifdef NO_DEFLATE       /* for compatibility with old definition */

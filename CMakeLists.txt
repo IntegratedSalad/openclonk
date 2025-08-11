@@ -1455,6 +1455,11 @@ if (APPLE)
 		"$<$<BOOL:${CMAKE_SYSROOT}>:--sysroot=${CMAKE_SYSROOT}>"
 		"$<TARGET_FILE:openclonk>"
 	)
+	add_custom_command(TARGET openclonk
+		POST_BUILD COMMAND
+		/usr/bin/codesign --force --deep --sign - "$<TARGET_FILE:openclonk>"
+		COMMENT "Sign the app bundle ad-hoc"
+	)
 endif()
 
 ############################################################################
