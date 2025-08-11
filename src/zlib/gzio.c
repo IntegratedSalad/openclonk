@@ -11,10 +11,15 @@
 /* with new magic. Reads files with old or new magic. Does not   */
 /* accept uncompressed (transparent) files.                      */
 
+#define _DARWIN_C_SOURCE 1
+#undef NO_vsnprintf
+#undef HAS_vsnprintf_void
+#include <stdio.h>
+#include <stdarg.h>
+#include <string.h>
+
 #define _POSIX_C_SOURCE 1 /* for fdopen() */
 #define _BSD_SOURCE       /* for vsnprintf */
-
-#include <stdio.h>
 
 #include "zutil.h"
 
