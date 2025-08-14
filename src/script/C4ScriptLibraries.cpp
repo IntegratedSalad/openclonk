@@ -183,10 +183,18 @@ class C4ScriptLibraryCrypto : public C4ScriptLibrary
 		const int data_length = input->GetData().getLength();
 
 		auto hash_output = std::make_unique<unsigned char[]>(raw_output_length);
-		if (blake2b(hash_output.get(), raw_output_length, data, data_length, nullptr, 0) != 0)
-		{
-			throw C4AulExecError("internal error: blake2b call failed");
-		}
+//		if (blake2b(hash_output.get(), raw_output_length, data, data_length, nullptr, 0) != 0)
+        // blake2b(uint8_t *out, const void *in, const void *key, size_t outlen, size_t inlen, size_t keylen)
+        if (blake2b(
+                hash_output.get(),
+                data,
+                nullptr,
+                static_cast<size_t>(raw_output_length),
+                static_cast<size_t>(data_length),
+                0) != 0)
+        {
+            throw C4AulExecError("internal error: blake2b call failed");
+        }
 
 		std::string encoded = b85_encode(hash_output.get(), raw_output_length);
 		// Need to null-terminate here because StdStrBuf doesn't, so then 
